@@ -24,10 +24,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/elastic/beats/generator/common/beatgen"
 	"github.com/magefile/mage/mg"
 	"github.com/pkg/errors"
 	"go.uber.org/multierr"
+
+	"github.com/elastic/beats/generator/common/beatgen"
 
 	devtools "github.com/elastic/beats/dev-tools/mage"
 	"github.com/elastic/beats/dev-tools/mage/gotool"
@@ -109,8 +110,8 @@ func AddLicenseHeaders() error {
 		licenser(
 			licenser.License("ASL2"),
 			licenser.Exclude("x-pack"),
-			licenser.Exclude("generator/beat/{beat}"),
-			licenser.Exclude("generator/metricbeat/{beat}"),
+			licenser.Exclude("generator/_templates/beat/{beat}"),
+			licenser.Exclude("generator/_templates/metricbeat/{beat}"),
 		),
 		licenser(
 			licenser.License("Elastic"),
@@ -133,9 +134,8 @@ func CheckLicenseHeaders() error {
 			licenser.Check(),
 			licenser.License("ASL2"),
 			licenser.Exclude("x-pack"),
-			licenser.Exclude("generator/beat/{beat}"),
-			licenser.Exclude("generator/metricbeat/{beat}"),
-			licenser.Exclude("generator/beat/{beat}"),
+			licenser.Exclude("generator/_templates/beat/{beat}"),
+			licenser.Exclude("generator/_templates/metricbeat/{beat}"),
 		),
 		licenser(
 			licenser.Check(),
@@ -148,4 +148,9 @@ func CheckLicenseHeaders() error {
 // DumpVariables writes the template variables and values to stdout.
 func DumpVariables() error {
 	return devtools.DumpVariables()
+}
+
+// Vendor vendors deps using go modules.
+func Vendor() error {
+	return devtools.Vendor()
 }
